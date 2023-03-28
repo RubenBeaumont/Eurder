@@ -1,11 +1,11 @@
 package com.switchfully.eurder.user.userRepository;
 
-import com.switchfully.eurder.user.domain.User;
-import com.switchfully.eurder.user.domain.UserRepository;
-import com.switchfully.eurder.user.domain.roles.Customer;
-import com.switchfully.eurder.user.domain.userDetails.Address;
-import com.switchfully.eurder.user.domain.userDetails.ContactInformation;
-import com.switchfully.eurder.user.domain.userDetails.Name;
+import com.switchfully.eurder.user.domain.userObject.User;
+import com.switchfully.eurder.user.domain.repository.UserRepository;
+import com.switchfully.eurder.user.domain.userObject.roles.Customer;
+import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
+import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
+import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

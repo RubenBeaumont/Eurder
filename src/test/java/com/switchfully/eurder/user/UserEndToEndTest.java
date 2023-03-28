@@ -1,11 +1,11 @@
 package com.switchfully.eurder.user;
 
-import com.switchfully.eurder.user.api.dto.CustomerDTO;
-import com.switchfully.eurder.user.api.dto.UserDTO;
-import com.switchfully.eurder.user.domain.UserRepository;
-import com.switchfully.eurder.user.domain.userDetails.Address;
-import com.switchfully.eurder.user.domain.userDetails.ContactInformation;
-import com.switchfully.eurder.user.domain.userDetails.Name;
+import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.userDTO.UserDTO;
+import com.switchfully.eurder.user.domain.repository.UserRepository;
+import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
+import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
+import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

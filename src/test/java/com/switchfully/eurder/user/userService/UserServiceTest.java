@@ -1,17 +1,16 @@
 package com.switchfully.eurder.user.userService;
 
-import com.switchfully.eurder.user.api.dto.CustomerDTO;
-import com.switchfully.eurder.user.domain.User;
-import com.switchfully.eurder.user.domain.UserRepository;
-import com.switchfully.eurder.user.domain.roles.Customer;
-import com.switchfully.eurder.user.domain.userDetails.Address;
-import com.switchfully.eurder.user.domain.userDetails.ContactInformation;
-import com.switchfully.eurder.user.domain.userDetails.Name;
-import com.switchfully.eurder.user.service.UserMapper;
-import com.switchfully.eurder.user.service.UserService;
+import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.domain.userObject.User;
+import com.switchfully.eurder.user.domain.repository.UserRepository;
+import com.switchfully.eurder.user.domain.userObject.roles.Customer;
+import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
+import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
+import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
+import com.switchfully.eurder.user.service.mapper.UserMapper;
+import com.switchfully.eurder.user.service.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
