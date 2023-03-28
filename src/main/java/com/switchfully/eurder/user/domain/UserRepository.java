@@ -17,12 +17,20 @@ public class UserRepository {
                     new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "beaumont-rubben@hotmail.fr", "0471/260818"))
     ));
 
-    public List<User> getListOfUsers() {
-        return listOfUsers;
-    }
 
     public User addUser(User user){
         listOfUsers.add(user);
         return user;
+    }
+
+    public List<User> getListOfUsers() {
+        return listOfUsers;
+    }
+
+    public User getAUserByContactInformation(ContactInformation contactInformation){
+        return listOfUsers.stream()
+                .filter(user -> user.getContactInformation().equals(contactInformation))
+                .findFirst()
+                .orElseThrow();
     }
 }

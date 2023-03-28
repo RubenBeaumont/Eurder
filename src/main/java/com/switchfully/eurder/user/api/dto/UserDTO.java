@@ -29,7 +29,6 @@ public class UserDTO {
     public ContactInformation getContactInformation() {
         return contactInformation;
     }
-
     public Role getRole() {
         return role;
     }

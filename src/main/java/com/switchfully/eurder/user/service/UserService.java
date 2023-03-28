@@ -19,7 +19,6 @@ public class UserService {
 
     public UserDTO registerACustomer(CustomerDTO customerDTO){
         User newCustomer = new Customer(customerDTO);
-        userRepository.addUser(newCustomer);
-        return userMapper.toDTO(newCustomer);
+        return userMapper.toDTO(userRepository.addUser(newCustomer));
     }
 }

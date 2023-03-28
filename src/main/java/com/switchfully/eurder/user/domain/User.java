@@ -18,10 +18,10 @@ public abstract class User {
         this.role = role;
     }
 
-    public User(CustomerDTO customerDTO){
+    public User(CustomerDTO customerDTO, Role role){
         name = customerDTO.getName();
         contactInformation = customerDTO.getContactInformation();
-        role = customerDTO.getRole();
+        this.role = role;
     }
 
     public Name getName() {
@@ -39,10 +39,10 @@ public abstract class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(contactInformation, user.contactInformation);
+        return Objects.equals(name, user.name) && Objects.equals(contactInformation, user.contactInformation) && role == user.role;
     }
     @Override
     public int hashCode() {
-        return Objects.hash(name, contactInformation);
+        return Objects.hash(name, contactInformation, role);
     }
 }

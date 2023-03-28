@@ -7,13 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("users")
-public class UserController {
-    /*---Customer controller AND admin controller ? two pathing ?---*/
-
+@RequestMapping("customer")
+public class CustomerController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
+    public CustomerController(UserService userService) {
         this.userService = userService;
     }
 

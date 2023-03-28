@@ -1,23 +1,15 @@
 package com.switchfully.eurder.user.domain.userDetails;
 
-public class ContactInformation {
-    private final String emailAddress;
-    private final Address address;
-    private final String phoneNumber;
+import java.util.Objects;
 
-    public ContactInformation(Address address, String emailAddress, String phoneNumber) {
-        this.address = address;
-        this.emailAddress = emailAddress;
-        this.phoneNumber = phoneNumber;
+public record ContactInformation(Address address, String emailAddress, String phoneNumber) {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactInformation that = (ContactInformation) o;
+        return Objects.equals(emailAddress, that.emailAddress) && Objects.equals(address, that.address) && Objects.equals(phoneNumber, that.phoneNumber);
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-    public Address getAddress() {
-        return address;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 }
