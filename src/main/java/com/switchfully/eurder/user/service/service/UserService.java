@@ -1,10 +1,11 @@
 package com.switchfully.eurder.user.service.service;
 
-import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
-import com.switchfully.eurder.user.api.userDTO.UserDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.roles.Customer;
+import com.switchfully.eurder.user.service.exceptions.InvalidParametersException;
 import com.switchfully.eurder.user.service.mapper.UserMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,12 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public UserDTO registerACustomer(CustomerDTO customerDTO){
+    public UserDTO registerACustomer(CustomerDTO customerDTO)throws RuntimeException{
         if(!isUserProfileValid(customerDTO)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Input is invalid, either a field is empty or incorrect.");
+            throw new InvalidParametersException("Input is invalid, either a field is empty or incorrect.");
         }
         if(userRepository.doesUserExist(customerDTO)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Input is invalid, email or phone-number is already in use.");
+            throw new InvalidParametersException("Input is invalid, email or phone-number is already in use.");
         }
         User newCustomer = new Customer(customerDTO);
         return userMapper.toDTO(userRepository.addUser(newCustomer));

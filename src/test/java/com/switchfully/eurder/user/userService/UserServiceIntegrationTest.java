@@ -1,6 +1,6 @@
 package com.switchfully.eurder.user.userService;
 
-import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.CustomerDTO;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.roles.Customer;

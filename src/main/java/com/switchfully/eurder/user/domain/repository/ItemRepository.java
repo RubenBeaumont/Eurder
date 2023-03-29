@@ -1,7 +1,8 @@
 package com.switchfully.eurder.user.domain.repository;
 
-import com.switchfully.eurder.user.api.itemDTO.PostItemDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
 import com.switchfully.eurder.user.domain.itemObject.Item;
+import com.switchfully.eurder.user.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -23,12 +24,18 @@ public class ItemRepository {
                 && item.getPrice() == postItemDTO.getPrice());
     }
 
-    public Item getAnItemByProperties(PostItemDTO postItemDTO){
+    public Item getAnItemByID(int id)throws RuntimeException{
+        return stock.stream()
+                .filter(item -> item.getItemID() == id)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(("No item was found for id " + id + ".")));
+    }
+    public Item getAnItemByProperties(PostItemDTO postItemDTO)throws RuntimeException{
         return stock.stream()
                 .filter(item -> item.getName().equals(postItemDTO.getName())
                         && item.getDescription().equals(postItemDTO.getDescription())
                         && item.getPrice() == postItemDTO.getPrice())
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NotFoundException(("No item was found.")));
     }
 }

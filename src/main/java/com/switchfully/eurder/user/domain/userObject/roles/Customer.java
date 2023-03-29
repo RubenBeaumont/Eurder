@@ -1,7 +1,7 @@
 package com.switchfully.eurder.user.domain.userObject.roles;
 
-import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
-import com.switchfully.eurder.user.api.userDTO.UserDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;

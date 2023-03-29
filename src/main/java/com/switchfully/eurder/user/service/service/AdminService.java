@@ -1,14 +1,16 @@
 package com.switchfully.eurder.user.service.service;
 
-import com.switchfully.eurder.user.api.itemDTO.ItemDTO;
-import com.switchfully.eurder.user.api.itemDTO.PostItemDTO;
-import com.switchfully.eurder.user.api.userDTO.UserDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
 import com.switchfully.eurder.user.domain.itemObject.Item;
 import com.switchfully.eurder.user.domain.repository.ItemRepository;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.service.mapper.ItemMapper;
 import com.switchfully.eurder.user.service.mapper.UserMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,6 +36,10 @@ public class AdminService {
     }
 
     public ItemDTO addItem(PostItemDTO postItemDTO){
+        if(!isItemDetailsValid(postItemDTO)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Input is invalid, a field is empty.");
+        }
         if(itemRepository.isItemInStock(postItemDTO)){
             itemRepository.getAnItemByProperties(postItemDTO)
                     .setAmount(itemRepository.getAnItemByProperties(postItemDTO).getAmount()
@@ -42,5 +48,24 @@ public class AdminService {
         }
         Item newItem = new Item(postItemDTO);
         return itemMapper.toDTO(itemRepository.addItem(newItem));
+    }
+
+    public boolean isItemDetailsValid(PostItemDTO postItemDTO){
+        return isNameValid(postItemDTO.getName())
+                && isDescriptionValid(postItemDTO.getDescription())
+                && isPriceValid(postItemDTO.getPrice())
+                && isAmountValid(postItemDTO.getAmount());
+    }
+    private boolean isNameValid(String name){
+        return name != null;
+    }
+    private boolean isDescriptionValid(String description){
+        return description != null;
+    }
+    private boolean isPriceValid(double price){
+        return price != 0;
+    }
+    private boolean isAmountValid(int amount){
+        return amount > 0;
     }
 }

@@ -1,13 +1,13 @@
 package com.switchfully.eurder.user.domain.repository;
 
-import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.CustomerDTO;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.userObject.roles.Admin;
 import com.switchfully.eurder.user.domain.userObject.roles.Role;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
-import com.switchfully.eurder.user.service.exceptions.UserNotFoundException;
+import com.switchfully.eurder.user.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -43,13 +43,13 @@ public class UserRepository {
         return listOfUsers.stream()
                 .filter((user -> user.getUserID() == id && user.getRole().equals(Role.CUSTOMER)))
                 .findFirst()
-                .orElseThrow(() -> new UserNotFoundException("No customer was found for id " + id + "."));
+                .orElseThrow(() -> new NotFoundException("No customer was found for id " + id + "."));
     }
 
-    public User getAUserByContactInformation(ContactInformation contactInformation){
+    public User getAUserByContactInformation(ContactInformation contactInformation) throws RuntimeException{
         return listOfUsers.stream()
                 .filter(user -> user.getContactInformation().equals(contactInformation))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NotFoundException("No customer was found."));
     }
 }

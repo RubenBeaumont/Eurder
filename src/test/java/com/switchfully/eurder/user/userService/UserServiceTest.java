@@ -1,12 +1,12 @@
 package com.switchfully.eurder.user.userService;
 
-import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.CustomerDTO;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
-import com.switchfully.eurder.user.domain.userObject.roles.Customer;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
+import com.switchfully.eurder.user.service.exceptions.InvalidParametersException;
 import com.switchfully.eurder.user.service.mapper.UserMapper;
 import com.switchfully.eurder.user.service.service.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -58,7 +58,7 @@ public class UserServiceTest {
 
         @Test
         void registerACustomer_givenACustomer_ifUserProfileIsNotValid_thenThrowAResponseStatusException(){
-            ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+            InvalidParametersException exception = assertThrows(InvalidParametersException.class,
                     () -> userService.registerACustomer(wrongEmailDTO));
 
             assertEquals("Input is invalid, either a field is empty or incorrect.", exception.getMessage());
@@ -66,7 +66,7 @@ public class UserServiceTest {
 
         @Test
         void registerACustomer_givenACustomer_ifUserAlreadyExist_thenThrowAResponseStatusException(){
-            ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+            InvalidParametersException exception = assertThrows(InvalidParametersException.class,
                     () -> {
                 userService.registerACustomer(customerDTO);
                 userService.registerACustomer(customerDTO);

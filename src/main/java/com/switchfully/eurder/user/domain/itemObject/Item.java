@@ -1,7 +1,7 @@
 package com.switchfully.eurder.user.domain.itemObject;
 
-import com.switchfully.eurder.user.api.itemDTO.ItemDTO;
-import com.switchfully.eurder.user.api.itemDTO.PostItemDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.switchfully.eurder.user.api.itemDTO;
+package com.switchfully.eurder.user.api.dto.itemDTO;
 
 import com.switchfully.eurder.user.domain.itemObject.Item;
 

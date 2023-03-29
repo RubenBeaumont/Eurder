@@ -1,7 +1,7 @@
 package com.switchfully.eurder.user;
 
-import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
-import com.switchfully.eurder.user.api.userDTO.UserDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.CustomerDTO;
+import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
@@ -39,7 +39,7 @@ public class UserEndToEndTest {
                         .contentType(JSON)
                         .when()
                         .port(port)
-                        .post("/customer/register")
+                        .post("/user/register")
                         .then()
                         .assertThat()
                         .statusCode(HttpStatus.CREATED.value())
