@@ -11,7 +11,7 @@ public class Item {
     private final String name;
     private final String description;
     private final double price;
-    private final int amount;
+    private int amount;
 
 
     public Item(String name, String description, double price, int amount) {
@@ -51,6 +51,10 @@ public class Item {
     }
     public int getAmount() {
         return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override

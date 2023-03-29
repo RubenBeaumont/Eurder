@@ -14,28 +14,33 @@ import java.util.List;
 
 @Service
 public class AdminService {
-    private final ItemRepository itemRepository;
     private final UserRepository userRepository;
-    private final ItemMapper itemMapper;
+    private final ItemRepository itemRepository;
     private final UserMapper userMapper;
+    private final ItemMapper itemMapper;
 
-    public AdminService(ItemRepository itemRepository, UserRepository userRepository, ItemMapper itemMapper, UserMapper userMapper) {
-        this.itemRepository = itemRepository;
+    public AdminService(UserRepository userRepository, ItemRepository itemRepository, UserMapper userMapper, ItemMapper itemMapper) {
         this.userRepository = userRepository;
-        this.itemMapper = itemMapper;
+        this.itemRepository = itemRepository;
         this.userMapper = userMapper;
-    }
-
-    public ItemDTO addItem(PostItemDTO postItemDTO){
-        Item newItem = new Item(postItemDTO);
-        return itemMapper.toDTO(itemRepository.addItem(newItem));
+        this.itemMapper = itemMapper;
     }
 
     public List<UserDTO> getAllCustomers(){
         return userMapper.toDTOs(userRepository.getAllCustomers());
     }
-
     public UserDTO getACustomer(int id){
         return userMapper.toDTO(userRepository.getAUserByID(id));
+    }
+
+    public ItemDTO addItem(PostItemDTO postItemDTO){
+        if(itemRepository.isItemInStock(postItemDTO)){
+            itemRepository.getAnItemByProperties(postItemDTO)
+                    .setAmount(itemRepository.getAnItemByProperties(postItemDTO).getAmount()
+                            + postItemDTO.getAmount());
+            return itemMapper.toDTO(itemRepository.getAnItemByProperties(postItemDTO));
+        }
+        Item newItem = new Item(postItemDTO);
+        return itemMapper.toDTO(itemRepository.addItem(newItem));
     }
 }

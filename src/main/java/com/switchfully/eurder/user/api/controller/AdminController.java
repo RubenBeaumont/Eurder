@@ -19,7 +19,7 @@ public class AdminController {
     }
 
 
-    @PostMapping(path = "items/add", produces = "application/json")
+    @PostMapping(path = "items", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public ItemDTO addItem(@RequestBody PostItemDTO postItemDTO){
         return adminService.addItem(postItemDTO);
