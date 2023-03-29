@@ -14,15 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Nested;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.inOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest
 public class UserServiceTest {
     private final UserRepository userRepositoryMock = Mockito.mock(UserRepository.class);
     private final UserRepository userRepository = new UserRepository();
@@ -46,10 +43,10 @@ public class UserServiceTest {
 
 
     @Nested
-    @DisplayName("registerACustomer")
+    @DisplayName("Register a Customer")
     class registerACustomer {
         @Test
-        void registerACustomer_givenACustomer_thenFirstlyAddItToTheRepositoryAndSecondlyConvertItToADTO() {
+        void givenACustomer_thenFirstlyAddItToTheRepositoryAndSecondlyConvertItToADTO() {
             userServiceMock.registerACustomer(customerDTO);
             InOrder expectedExecutionFlow = inOrder(userRepositoryMock, userMapperMock);
             expectedExecutionFlow.verify(userRepositoryMock).addUser(Mockito.any(User.class));
@@ -57,7 +54,7 @@ public class UserServiceTest {
         }
 
         @Test
-        void registerACustomer_givenACustomer_ifUserProfileIsNotValid_thenThrowAResponseStatusException(){
+        void givenACustomer_ifUserProfileIsNotValid_thenThrowAnException(){
             InvalidParametersException exception = assertThrows(InvalidParametersException.class,
                     () -> userService.registerACustomer(wrongEmailDTO));
 
@@ -65,7 +62,7 @@ public class UserServiceTest {
         }
 
         @Test
-        void registerACustomer_givenACustomer_ifUserAlreadyExist_thenThrowAResponseStatusException(){
+        void givenACustomer_ifUserAlreadyExist_thenThrowAnException(){
             InvalidParametersException exception = assertThrows(InvalidParametersException.class,
                     () -> {
                 userService.registerACustomer(customerDTO);
@@ -77,15 +74,15 @@ public class UserServiceTest {
     }
 
     @Nested
-    @DisplayName("isUserProfileValid")
+    @DisplayName("Is the user profile valid")
     class isUserProfileValid {
         @Test
-        void isUserProfileValid_givenACustomer_ifAllFieldsAreValid_thenReturnsTrue() {
+        void givenACustomer_ifAllFieldsAreValid_thenReturnsTrue() {
             assertThat(userServiceMock.isUserProfileValid(customerDTO)).isTrue();
         }
 
         @Test
-        void isUserProfileValid_givenACustomer_ifEmailIsNotValid_thenReturnsFalse() {
+        void givenACustomer_ifEmailIsNotValid_thenReturnsFalse() {
             assertThat(userServiceMock.isUserProfileValid(wrongEmailDTO)).isFalse();
         }
     }

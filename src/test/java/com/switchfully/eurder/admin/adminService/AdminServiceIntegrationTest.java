@@ -56,6 +56,13 @@ public class AdminServiceIntegrationTest {
 
             assertThat(itemRepository.isItemInStock(televisionDTO)).isTrue();
         }
+
+        @Test
+        void ifItIsAlreadyInStock_thenAddAmountToExistingItem() {
+            adminService.addItem(televisionDTO);
+            adminService.addItem(televisionDTO);
+            assertThat(itemRepository.getAnItemByProperties(televisionDTO).getAmount()).isEqualTo(10);
+        }
     }
 
     @Nested
