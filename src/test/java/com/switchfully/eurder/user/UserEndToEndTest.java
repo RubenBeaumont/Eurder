@@ -28,8 +28,8 @@ public class UserEndToEndTest {
     @Test
     void registerACustomer_givenACustomerToRegister_thenNewlyRegisteredCustomerIsSavedAndReturned(){
         CustomerDTO customerDTO = new CustomerDTO(
-                new Name("Ruben", "Beaumont"),
-                new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "beaumont-rubben@hotmail.fr", "0471/260818"));
+                new Name("Léonor", "Bauguen"),
+                new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "l.bauguen56@gmail.fr", "0619102224"));
 
         UserDTO userDTO =
                 RestAssured

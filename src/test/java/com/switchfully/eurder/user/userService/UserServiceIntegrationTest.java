@@ -17,17 +17,15 @@ public class UserServiceIntegrationTest {
     private static final CustomerDTO customerDTO = new CustomerDTO(
             new Name("Jeff", "Jeffson"),
             new ContactInformation(
-                    new Address(
-                            "BerkendaelStraat", 26, "1190", "Forest"),
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478/280818"));
+                    "0478280818"));
     private static final User customer = new Customer(
             new Name("Jeff", "Jeffson"),
             new ContactInformation(
-                    new Address(
-                            "BerkendaelStraat", 26, "1190", "Forest"),
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478/280818"));
+                    "0478280818"));
 
     UserRepository userRepository = new UserRepository();
     UserMapper userMapper = new UserMapper();

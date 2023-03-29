@@ -1,5 +1,6 @@
 package com.switchfully.eurder.user.userRepository;
 
+import com.switchfully.eurder.user.api.userDTO.CustomerDTO;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.roles.Customer;
@@ -12,13 +13,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserRepositoryTest {
     UserRepository userRepository = new UserRepository();
+    private static final CustomerDTO customerDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"));
     private static final User customer = new Customer(
             new Name("Jeff", "Jeffson"),
             new ContactInformation(
-                    new Address(
-                            "BerkendaelStraat", 26, "1190", "Forest"),
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478/280818"));
+                    "0478280818"));
 
     @Test
     void addUser_givenAUser_thenSavedItInTheRepository(){
@@ -26,4 +32,18 @@ public class UserRepositoryTest {
 
         assertThat(customer).isEqualTo(userRepository.getAUserByContactInformation(customer.getContactInformation()));
     }
+
+    @Test
+    void doesAUserExist_givenAUser_thenCheckTheRepository_IfPresentReturnsTrue(){
+        userRepository.addUser(customer);
+
+        assertThat(userRepository.doesUserExist(customerDTO)).isTrue();
+    }
+
+    @Test
+    void doesAUserExist_givenAUser_thenCheckTheRepository_IfNotPresentReturnsFalse(){
+        assertThat(userRepository.doesUserExist(customerDTO)).isFalse();
+    }
+
+
 }

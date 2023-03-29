@@ -34,7 +34,7 @@ public class UserService {
     }
 
 
-    private boolean isUserProfileValid(CustomerDTO customerDTO){
+    public boolean isUserProfileValid(CustomerDTO customerDTO){
         return isFirstNameValid(customerDTO.getName().firstName())
                 && isLastNameValid(customerDTO.getName().lastName())
                 && isStreetNameValid(customerDTO.getContactInformation().address().streetName())

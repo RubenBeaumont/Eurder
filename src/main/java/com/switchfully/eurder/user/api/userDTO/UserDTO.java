@@ -5,6 +5,8 @@ import com.switchfully.eurder.user.domain.userObject.roles.Role;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 
+import java.util.Objects;
+
 public class UserDTO {
 
     private final int userID;
@@ -37,5 +39,18 @@ public class UserDTO {
     }
     public Role getRole() {
         return role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return userID == userDTO.userID && Objects.equals(name, userDTO.name) && Objects.equals(contactInformation, userDTO.contactInformation) && role == userDTO.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userID, name, contactInformation, role);
     }
 }
