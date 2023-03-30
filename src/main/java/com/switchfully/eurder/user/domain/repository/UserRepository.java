@@ -39,14 +39,14 @@ public class UserRepository {
                 .toList();
     }
 
-    public User getAUserByID(int id) throws RuntimeException{
+    public User getAUserByID(int id){
         return listOfUsers.stream()
                 .filter((user -> user.getUserID() == id && user.getRole().equals(Role.CUSTOMER)))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("No customer was found for id " + id + "."));
     }
 
-    public User getAUserByContactInformation(ContactInformation contactInformation) throws RuntimeException{
+    public User getAUserByContactInformation(ContactInformation contactInformation){
         return listOfUsers.stream()
                 .filter(user -> user.getContactInformation().equals(contactInformation))
                 .findFirst()

@@ -24,13 +24,17 @@ public class ItemRepository {
                 && item.getPrice() == postItemDTO.getPrice());
     }
 
-    public Item getAnItemByID(int id)throws RuntimeException{
+    public List<Item> getAllItems(){
+        return stock;
+    }
+
+    public Item getAnItemByID(int id){
         return stock.stream()
                 .filter(item -> item.getItemID() == id)
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(("No item was found for id " + id + ".")));
     }
-    public Item getAnItemByProperties(PostItemDTO postItemDTO)throws RuntimeException{
+    public Item getAnItemByProperties(PostItemDTO postItemDTO){
         return stock.stream()
                 .filter(item -> item.getName().equals(postItemDTO.getName())
                         && item.getDescription().equals(postItemDTO.getDescription())
