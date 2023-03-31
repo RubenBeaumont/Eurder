@@ -1,6 +1,7 @@
 package com.switchfully.eurder.user.service.service;
 
 import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.ItemGroupDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.OrderDTO;
 import com.switchfully.eurder.user.domain.itemObject.ItemGroup;
 import com.switchfully.eurder.user.domain.itemObject.Order;
@@ -34,33 +35,30 @@ public class CustomerService {
         return itemMapper.toDTOs(itemRepository.getAllItems());
     }
 
-    public OrderDTO orderAnItem(int customerID, int itemID, int amount){
-        isAmountValid(itemID, amount);
-        modifyAmountForSelectedItemInStock(itemID, amount);
-        ItemGroup itemGroup = createItemGRoup(itemID, amount);
-        Order order = new Order(itemGroup);
+    public OrderDTO orderAnItem(int customerID, List<ItemGroupDTO> itemGroupDTOList){
+        List<ItemGroup> itemGroupList = itemGroupDTOList.stream().map(ItemGroup::new).toList();
+        setShippingDate(itemGroupList);
+        itemGroupList.forEach(itemGroup -> modifyAmountForSelectedItemInStock(itemGroup.getItemID(), itemGroup.getAmount()));
+        itemGroupList.forEach(this::calculatePriceOfItemGroup);
+        Order order = new Order(itemGroupList);
         return orderMapper.toDTO(orderRepository.createAnOrder(userRepository.getAUserByID(customerID), order));
     }
 
-    private ItemGroup createItemGRoup(int itemID, int amount) {
-        ItemDTO itemDTO = new ItemDTO(itemRepository.getAnItemByID(itemID));
-        ItemGroup itemGroup = new ItemGroup(itemDTO);
-        itemGroup.getItemDTO().setAmount(amount);
-        setShippingDateDependingOnStock(itemID, itemGroup);
-        return itemGroup;
+
+    private void setShippingDate(List<ItemGroup> itemGroupList) {
+        itemGroupList.forEach(itemGroup -> {
+            if(!isItemStockSufficient(itemGroup.getItemID(), itemGroup.getAmount())){
+                itemGroup.setShippingDate(LocalDate.now().plusWeeks(1));
+            }});
     }
-    private void setShippingDateDependingOnStock(int itemID, ItemGroup itemGroup) {
-        if(itemRepository.getAnItemByID(itemID).getAmount() == 0){
-            itemGroup.setShippingDate(LocalDate.now().plusWeeks(1));
-        }
-    }
-    private void isAmountValid(int itemID, int amount) {
-        if(amount > itemRepository.getAnItemByID(itemID).getAmount()){
-            throw new IllegalArgumentException();
-        }
+    private boolean isItemStockSufficient(int itemID, int amount) {
+        return amount <= itemRepository.getAnItemByID(itemID).getAmount();
     }
     private void modifyAmountForSelectedItemInStock(int itemID, int amount) {
         itemRepository.getAnItemByID(itemID).setAmount(
                 itemRepository.getAnItemByID(itemID).getAmount() - amount);
+    }
+    private void calculatePriceOfItemGroup(ItemGroup itemGroup) {
+        itemGroup.setPrice(itemRepository.getAnItemByID(itemGroup.getItemID()).getPrice()*itemGroup.getAmount());
     }
 }

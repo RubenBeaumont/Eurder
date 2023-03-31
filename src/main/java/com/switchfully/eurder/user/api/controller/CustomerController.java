@@ -1,6 +1,7 @@
 package com.switchfully.eurder.user.api.controller;
 
 import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.ItemGroupDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.OrderDTO;
 import com.switchfully.eurder.user.service.service.CustomerService;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,10 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping(path = "{customerID}/items/{itemID}", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "{customerID}/items", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDTO orderAnItem(@PathVariable int customerID, @PathVariable int itemID, @RequestBody int amount){
-        return customerService.orderAnItem(customerID, itemID, amount);
+    public OrderDTO orderAnItem(@PathVariable int customerID, @RequestBody List<ItemGroupDTO> itemGroupDTOList){
+        return customerService.orderAnItem(customerID, itemGroupDTOList);
     }
 
     @GetMapping(path = "items", produces = "application/json")

@@ -14,7 +14,7 @@ public class OrderRepository {
     private final Map<User, List<Order>> orderDataBase = new HashMap<>();
 
     public Order createAnOrder(User customer, Order order){
-        if(doesCustomerHaveOrderPending(customer)){
+        if(hasCustomerAlreadyOrdered(customer)){
             getOrdersByKey(customer).add(order);
         }
         List<Order> orderList = new ArrayList<>();
@@ -27,7 +27,7 @@ public class OrderRepository {
         return orderDataBase.get(customer);
     }
 
-    public boolean doesCustomerHaveOrderPending(User customer){
+    public boolean hasCustomerAlreadyOrdered(User customer){
         return orderDataBase.keySet().stream()
                 .anyMatch(key -> key.equals(customer));
     }
