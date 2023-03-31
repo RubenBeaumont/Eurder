@@ -9,6 +9,8 @@ import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.service.exceptions.InvalidParametersException;
 import com.switchfully.eurder.user.service.mapper.ItemMapper;
 import com.switchfully.eurder.user.service.mapper.UserMapper;
+import com.switchfully.eurder.user.service.security.Feature;
+import com.switchfully.eurder.user.service.security.SecurityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,11 +34,16 @@ public class AdminService {
     public List<UserDTO> getAllCustomers(){
         return userMapper.toDTOs(userRepository.getAllCustomers());
     }
+
     public UserDTO getACustomer(int id){
         return userMapper.toDTO(userRepository.getAUserByID(id));
     }
 
-    public ItemDTO addItem(PostItemDTO postItemDTO)throws RuntimeException{
+    public ItemDTO updateItem(ItemDTO itemDTO){
+        return itemMapper.toDTO(itemRepository.updateItem(itemDTO));
+    }
+
+    public ItemDTO addItem(PostItemDTO postItemDTO){
         if(!isItemDetailsValid(postItemDTO)){
             throw new InvalidParametersException("Input is invalid, a field is empty.");
         }

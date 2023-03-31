@@ -1,7 +1,6 @@
 package com.switchfully.eurder.admin.adminService;
 
 import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
-import com.switchfully.eurder.user.domain.itemObject.Item;
 import com.switchfully.eurder.user.domain.repository.ItemRepository;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.User;
@@ -15,11 +14,8 @@ import com.switchfully.eurder.user.service.mapper.UserMapper;
 import com.switchfully.eurder.user.service.service.AdminService;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,13 +31,14 @@ public class AdminServiceIntegrationTest {
             new ContactInformation(
                     new Address("Rue Berkendael", 26, "1190", "Forest"),
                     "l.bauguen56@gmail.fr",
-                    "0619102224"));
+                    "0619102224"),
+            "123");
     private static final User joachim = new Customer(
             new Name("Joachim", "Hermann"),
             new ContactInformation(
                     new Address("Rue Berkendael", 26, "1190", "Forest"),
                     "jojo11@gmail.be",
-                    "0478995566"));
+                    "0478995566"), "123");
     private final UserRepository userRepository = new UserRepository();
     private final ItemRepository itemRepository = new ItemRepository();
     private final UserMapper userMapper = new UserMapper();

@@ -40,7 +40,7 @@ public class AdminServiceTest {
             new ContactInformation(
                     new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478280818"));
+                    "0478280818"), "123");
     @Nested
     @DisplayName("Add an Item")
     class addItem {

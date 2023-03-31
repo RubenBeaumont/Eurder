@@ -3,6 +3,7 @@ package com.switchfully.eurder.user.service.service;
 import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.ItemGroupDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.OrderDTO;
+import com.switchfully.eurder.user.api.dto.itemDTO.OrderReviewDTO;
 import com.switchfully.eurder.user.domain.itemObject.ItemGroup;
 import com.switchfully.eurder.user.domain.itemObject.Order;
 import com.switchfully.eurder.user.domain.repository.ItemRepository;
@@ -10,6 +11,8 @@ import com.switchfully.eurder.user.domain.repository.OrderRepository;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.service.mapper.ItemMapper;
 import com.switchfully.eurder.user.service.mapper.OrderMapper;
+import com.switchfully.eurder.user.service.security.Feature;
+import com.switchfully.eurder.user.service.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -33,6 +36,18 @@ public class CustomerService {
 
     public List<ItemDTO> getAllItems(){
         return itemMapper.toDTOs(itemRepository.getAllItems());
+    }
+
+    public OrderReviewDTO getAllMyOrders(int customerID){
+        OrderReviewDTO orderReviewDTO = new OrderReviewDTO(
+                orderMapper.toDTOs(orderRepository.getOrdersByKey(userRepository.getAUserByID(customerID))));
+        setTotalPriceOfAllOrders(orderReviewDTO);
+        return orderReviewDTO;
+    }
+
+    private static void setTotalPriceOfAllOrders(OrderReviewDTO orderReviewDTO) {
+        orderReviewDTO.setTotalPrice(orderReviewDTO.getOrderDTOList().stream()
+                .mapToDouble(OrderDTO::getPrice).sum());
     }
 
     public OrderDTO orderAnItem(int customerID, List<ItemGroupDTO> itemGroupDTOList){

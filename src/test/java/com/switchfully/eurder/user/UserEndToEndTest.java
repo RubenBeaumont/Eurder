@@ -29,7 +29,7 @@ public class UserEndToEndTest {
     void registerACustomer_givenACustomerToRegister_thenNewlyRegisteredCustomerIsSavedAndReturned(){
         CustomerDTO customerDTO = new CustomerDTO(
                 new Name("Léonor", "Bauguen"),
-                new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "l.bauguen56@gmail.fr", "0619102224"));
+                new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "l.bauguen56@gmail.fr", "0619102224"), "123");
 
         UserDTO userDTO =
                 RestAssured
@@ -39,7 +39,7 @@ public class UserEndToEndTest {
                         .contentType(JSON)
                         .when()
                         .port(port)
-                        .post("/user/register")
+                        .post("/user/registration")
                         .then()
                         .assertThat()
                         .statusCode(HttpStatus.CREATED.value())

@@ -5,6 +5,7 @@ import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
 import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.User;
+import com.switchfully.eurder.user.domain.userObject.roles.Admin;
 import com.switchfully.eurder.user.domain.userObject.roles.Customer;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
@@ -34,13 +35,19 @@ public class AdminEndToEndTest {
             new ContactInformation(
                     new Address("Rue Berkendael", 26, "1190", "Forest"),
                     "l.bauguen56@gmail.fr",
-                    "0619102224"));
+                    "0619102224"), "123");
     private static final User joachim = new Customer(
             new Name("Joachim", "Hermann"),
             new ContactInformation(
                     new Address("Rue Berkendael", 26, "1190", "Forest"),
                     "jojo11@gmail.be",
-                    "0478995566"));
+                    "0478995566"), "123");
+    private static final User ruben = new Admin(
+            new Name("Ruben", "Beaumont"),
+            new ContactInformation(
+                    new Address("Rue Berkendael", 26, "1190", "Forest"),
+                    "admin@gmail.be",
+                    "0471260818"), "123");
     @Autowired
     UserRepository userRepository = new UserRepository();
     UserMapper userMapper = new UserMapper();
@@ -58,6 +65,9 @@ public class AdminEndToEndTest {
             ItemDTO itemDTO =
                     RestAssured
                             .given()
+                            .auth()
+                            .preemptive()
+                            .basic("admin@gmail.be", "123")
                             .body(postItemDTO)
                             .accept(JSON)
                             .contentType(JSON)
@@ -87,6 +97,9 @@ public class AdminEndToEndTest {
             List<UserDTO> listOfCustomers =
                     RestAssured
                             .given()
+                            .auth()
+                            .preemptive()
+                            .basic("admin@gmail.be", "123")
                             .contentType(JSON)
                             .when()
                             .port(port)
@@ -114,6 +127,9 @@ public class AdminEndToEndTest {
             UserDTO userDTO =
                     RestAssured
                             .given()
+                            .auth()
+                            .preemptive()
+                            .basic("admin@gmail.be", "123")
                             .contentType(JSON)
                             .when()
                             .port(port)
@@ -131,6 +147,9 @@ public class AdminEndToEndTest {
         void givenAnID_ifCustomerIsNotPresent_thenThrowsA404NotFound() {
             RestAssured
                     .given()
+                    .auth()
+                    .preemptive()
+                    .basic("admin@gmail.be", "123")
                     .contentType(JSON)
                     .when()
                     .port(port)

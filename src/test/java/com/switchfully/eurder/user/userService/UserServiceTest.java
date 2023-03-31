@@ -33,13 +33,15 @@ public class UserServiceTest {
             new ContactInformation(
                     new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478280818"));
+                    "0478280818"),
+            "123");
     private static final CustomerDTO wrongEmailDTO = new CustomerDTO(
             new Name("Jeff", "Jeffson"),
             new ContactInformation(
                     new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeffhotmail.be",
-                    "0478280818"));
+                    "0478280818"),
+            "123");
 
 
     @Nested

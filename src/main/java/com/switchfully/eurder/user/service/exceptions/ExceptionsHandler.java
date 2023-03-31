@@ -19,4 +19,14 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     protected void invalidParametersException(InvalidParametersException exception, HttpServletResponse response) throws IOException{
         response.sendError(BAD_REQUEST.value(), exception.getMessage());
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    protected void unauthorizedException(UnauthorizedException exception, HttpServletResponse response) throws IOException{
+        response.sendError(UNAUTHORIZED.value(), exception.getMessage());
+    }
+
+    @ExceptionHandler(WrongPasswordException.class)
+    protected void wrongPasswordException(WrongPasswordException exception, HttpServletResponse response)throws IOException{
+        response.sendError(BAD_REQUEST.value(), exception.getMessage());
+    }
 }

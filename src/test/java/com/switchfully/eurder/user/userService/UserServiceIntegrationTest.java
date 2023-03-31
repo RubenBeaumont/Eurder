@@ -19,13 +19,14 @@ public class UserServiceIntegrationTest {
             new ContactInformation(
                     new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478280818"));
+                    "0478280818"),
+            "123");
     private static final User customer = new Customer(
             new Name("Jeff", "Jeffson"),
             new ContactInformation(
                     new Address("BerkendaelStraat", 26, "1190", "Forest"),
                     "jeff@hotmail.be",
-                    "0478280818"));
+                    "0478280818"), "123");
 
     UserRepository userRepository = new UserRepository();
     UserMapper userMapper = new UserMapper();

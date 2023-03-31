@@ -18,7 +18,7 @@ public class UserRepository {
     private final List<User> listOfUsers = new ArrayList<>(List.of(
             new Admin(
                     new Name("Ruben", "Beaumont"),
-                    new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "beaumont-rubben@hotmail.fr", "0471260818"))
+                    new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "admin@gmail.be", "0471260818"), "123")
     ));
 
 
@@ -44,6 +44,14 @@ public class UserRepository {
                 .filter((user -> user.getUserID() == id && user.getRole().equals(Role.CUSTOMER)))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("No customer was found for id " + id + "."));
+    }
+
+    public User getAUserByEmail(String email){
+        return listOfUsers.stream()
+                .filter(user -> user.getContactInformation().emailAddress().equals(email))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("No user found for that e-mail address."));
+
     }
 
     public User getAUserByContactInformation(ContactInformation contactInformation){

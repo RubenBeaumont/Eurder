@@ -5,6 +5,7 @@ import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
 import com.switchfully.eurder.user.domain.userObject.roles.Role;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
+import com.switchfully.eurder.user.service.security.Feature;
 
 import java.util.Objects;
 
@@ -13,19 +14,22 @@ public abstract class User {
     private static int counter;
     private final Name name;
     private final ContactInformation contactInformation;
+    private final String password;
     private final Role role;
 
-    public User(Name name, ContactInformation contactInformation, Role role) {
+    public User(Name name, ContactInformation contactInformation, String password, Role role) {
         this.userID = ++counter;
         this.name = name;
         this.contactInformation = contactInformation;
+        this.password = password;
         this.role = role;
     }
 
     public User(CustomerDTO customerDTO, Role role){
         this.userID = ++counter;
-        name = customerDTO.getName();
-        contactInformation = customerDTO.getContactInformation();
+        this.name = customerDTO.getName();
+        this.contactInformation = customerDTO.getContactInformation();
+        this.password = customerDTO.getPassword();
         this.role = role;
     }
 
@@ -43,6 +47,17 @@ public abstract class User {
     }
     public Role getRole() {
         return role;
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean canHaveAccessTo(Feature feature){
+        return role.containsFeature(feature);
+    }
+
+    public boolean doesPasswordMatch(String passwordToBeChecked){
+        return this.password.equals(passwordToBeChecked);
     }
 
     @Override

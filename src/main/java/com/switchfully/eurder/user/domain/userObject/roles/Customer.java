@@ -7,8 +7,8 @@ import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformat
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 
 public class Customer extends User {
-    public Customer(Name name, ContactInformation contactInformation) {
-        super(name, contactInformation, Role.CUSTOMER);
+    public Customer(Name name, ContactInformation contactInformation, String password) {
+        super(name, contactInformation, password, Role.CUSTOMER);
     }
 
     public Customer(CustomerDTO customerDTO){

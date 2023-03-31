@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Order {
     private final int orderID;
-    private int counter;
+    private static int counter;
     private final List<ItemGroup> itemGroupList;
     private final double price;
 

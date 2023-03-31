@@ -41,7 +41,8 @@ public class UserService {
                 && isPostcodeValid(customerDTO.getContactInformation().address().postalCode())
                 && isCityValid(customerDTO.getContactInformation().address().city())
                 && isEmailValid(customerDTO.getContactInformation().emailAddress())
-                && isPhoneNumberValid(customerDTO.getContactInformation().phoneNumber());
+                && isPhoneNumberValid(customerDTO.getContactInformation().phoneNumber())
+                && isPasswordValid(customerDTO.getPassword());
     }
     private boolean isFirstNameValid(String firstName){
         return firstName != null;
@@ -67,5 +68,8 @@ public class UserService {
     }
     private boolean isPhoneNumberValid(String phoneNumber){
         return phoneNumber.length() == 10 && phoneNumber.startsWith("0");
+    }
+    private boolean isPasswordValid(String password){
+        return password != null;
     }
 }

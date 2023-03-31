@@ -1,5 +1,6 @@
 package com.switchfully.eurder.user.domain.repository;
 
+import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
 import com.switchfully.eurder.user.domain.itemObject.Item;
 import com.switchfully.eurder.user.service.exceptions.NotFoundException;
@@ -15,6 +16,14 @@ public class ItemRepository {
     public Item addItem(Item item){
         stock.add(item);
         return item;
+    }
+
+    public Item updateItem(ItemDTO itemDTO){
+        getAnItemByID(itemDTO.getItemID()).setName(itemDTO.getName());
+        getAnItemByID(itemDTO.getItemID()).setDescription(itemDTO.getDescription());
+        getAnItemByID(itemDTO.getItemID()).setPrice(itemDTO.getPrice());
+        getAnItemByID(itemDTO.getItemID()).setAmount(itemDTO.getAmount());
+        return getAnItemByID(itemDTO.getItemID());
     }
 
     public boolean isItemInStock(PostItemDTO postItemDTO){

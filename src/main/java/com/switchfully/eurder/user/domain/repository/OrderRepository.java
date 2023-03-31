@@ -2,6 +2,7 @@ package com.switchfully.eurder.user.domain.repository;
 
 import com.switchfully.eurder.user.domain.itemObject.Order;
 import com.switchfully.eurder.user.domain.userObject.User;
+import com.switchfully.eurder.user.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -17,13 +18,18 @@ public class OrderRepository {
         if(hasCustomerAlreadyOrdered(customer)){
             getOrdersByKey(customer).add(order);
         }
-        List<Order> orderList = new ArrayList<>();
-        orderList.add(order);
-        orderDataBase.put(customer, orderList);
+        else {
+            List<Order> orderList = new ArrayList<>();
+            orderList.add(order);
+            orderDataBase.put(customer, orderList);
+        }
         return order;
     }
 
     public List<Order> getOrdersByKey(User customer){
+        if(!hasCustomerAlreadyOrdered(customer)){
+            throw new NotFoundException("No orders have been made by this customer.");
+        }
         return orderDataBase.get(customer);
     }
 

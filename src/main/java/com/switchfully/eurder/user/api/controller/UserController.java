@@ -7,14 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("users")
 public class UserController {
     private final UserService userService;
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping(path = "register", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "registration", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO registerACustomer(@RequestBody CustomerDTO customerDTO){
         return userService.registerACustomer(customerDTO);

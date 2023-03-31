@@ -6,8 +6,8 @@ import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformat
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 
 public class Admin extends User {
-    public Admin(Name name, ContactInformation contactInformation) {
-        super(name, contactInformation, Role.ADMIN);
+    public Admin(Name name, ContactInformation contactInformation, String password) {
+        super(name, contactInformation, password, Role.ADMIN);
     }
 
     @Override
