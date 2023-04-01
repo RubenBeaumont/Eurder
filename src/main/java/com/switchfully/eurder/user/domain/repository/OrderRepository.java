@@ -37,4 +37,8 @@ public class OrderRepository {
         return orderDataBase.keySet().stream()
                 .anyMatch(key -> key.equals(customer));
     }
+
+    public Map<User, List<Order>> getOrderDataBase() {
+        return orderDataBase;
+    }
 }

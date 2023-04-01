@@ -11,7 +11,6 @@ import com.switchfully.eurder.user.domain.userObject.userDetails.Address;
 import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformation;
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 import com.switchfully.eurder.user.service.exceptions.InvalidParametersException;
-import com.switchfully.eurder.user.service.exceptions.NotFoundException;
 import com.switchfully.eurder.user.service.mapper.ItemMapper;
 import com.switchfully.eurder.user.service.mapper.UserMapper;
 import com.switchfully.eurder.user.service.service.AdminService;
@@ -19,7 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.annotation.DirtiesContext;
 

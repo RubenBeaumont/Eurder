@@ -11,8 +11,6 @@ import com.switchfully.eurder.user.domain.repository.OrderRepository;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.service.mapper.ItemMapper;
 import com.switchfully.eurder.user.service.mapper.OrderMapper;
-import com.switchfully.eurder.user.service.security.Feature;
-import com.switchfully.eurder.user.service.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
