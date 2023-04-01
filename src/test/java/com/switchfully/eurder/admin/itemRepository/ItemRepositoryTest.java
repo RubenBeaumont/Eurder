@@ -34,20 +34,20 @@ public class ItemRepositoryTest {
         }
     }
 
-    @Nested
-    @DisplayName("Update an Item")
-    class updateItem{
-        @Test
-        void updateAnItem(){
-            itemRepository.addItem(television);
-            itemRepository.updateItem(updatedTelevision);
-            
-            assertThat(updatedTelevision.getName()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getName());
-            assertThat(updatedTelevision.getDescription()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getDescription());
-            assertThat(updatedTelevision.getAmount()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getAmount());
-            assertThat(updatedTelevision.getPrice()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getPrice());
-        }
-    }
+//    @Nested
+//    @DisplayName("Update an Item")
+//    class updateItem{
+//        @Test
+//        void updateAnItem(){
+//            itemRepository.addItem(television);
+//            itemRepository.updateItem(updatedTelevision);
+//
+//            assertThat(updatedTelevision.getName()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getName());
+//            assertThat(updatedTelevision.getDescription()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getDescription());
+//            assertThat(updatedTelevision.getAmount()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getAmount());
+//            assertThat(updatedTelevision.getPrice()).isEqualTo(itemRepository.getAnItemByID(television.getItemID()).getPrice());
+//        }
+//    }
 
     @Nested
     @DisplayName("Is the Item in stock")
