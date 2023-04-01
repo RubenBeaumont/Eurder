@@ -44,17 +44,19 @@ public class AdminService {
     }
 
     public ItemDTO addItem(PostItemDTO postItemDTO){
-        if(!isItemDetailsValid(postItemDTO)){
-            throw new InvalidParametersException("Input is invalid, a field is empty.");
-        }
+        checkForDetailsValidity(postItemDTO);
         if(itemRepository.isItemInStock(postItemDTO)){
-            itemRepository.getAnItemByProperties(postItemDTO)
-                    .setAmount(itemRepository.getAnItemByProperties(postItemDTO).getAmount()
-                            + postItemDTO.getAmount());
+            itemRepository.getAnItemByProperties(postItemDTO).setAmount(itemRepository.getAnItemByProperties(postItemDTO).getAmount() + postItemDTO.getAmount());
             return itemMapper.toDTO(itemRepository.getAnItemByProperties(postItemDTO));
         }
         Item newItem = new Item(postItemDTO);
         return itemMapper.toDTO(itemRepository.addItem(newItem));
+    }
+
+    private void checkForDetailsValidity(PostItemDTO postItemDTO) {
+        if(!isItemDetailsValid(postItemDTO)){
+            throw new InvalidParametersException("Input is invalid, a field is empty.");
+        }
     }
 
     public boolean isItemDetailsValid(PostItemDTO postItemDTO){

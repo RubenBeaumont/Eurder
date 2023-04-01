@@ -54,7 +54,7 @@ public class UserService {
         return streetName != null;
     }
     private boolean isStreetNumberValid(int streetNumber){
-        return streetNumber != 0;
+        return streetNumber > 0;
     }
     private boolean isPostcodeValid(String postalCode) {
         return postalCode.matches("\\d{4}") && postalCode.length() == 4;

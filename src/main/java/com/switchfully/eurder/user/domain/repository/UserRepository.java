@@ -50,7 +50,7 @@ public class UserRepository {
         return listOfUsers.stream()
                 .filter(user -> user.getContactInformation().emailAddress().equals(email))
                 .findFirst()
-                .orElseThrow(() -> new NotFoundException("No user found for that e-mail address."));
+                .orElseThrow(() -> new NotFoundException("No customer found for that e-mail address."));
 
     }
 

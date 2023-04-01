@@ -43,6 +43,7 @@ public class ItemRepository {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(("No item was found for id " + id + ".")));
     }
+
     public Item getAnItemByProperties(PostItemDTO postItemDTO){
         return stock.stream()
                 .filter(item -> item.getName().equals(postItemDTO.getName())

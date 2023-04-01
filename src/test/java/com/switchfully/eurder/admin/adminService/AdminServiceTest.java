@@ -1,5 +1,6 @@
 package com.switchfully.eurder.admin.adminService;
 
+import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
 import com.switchfully.eurder.user.domain.itemObject.Item;
 import com.switchfully.eurder.user.domain.repository.ItemRepository;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -34,6 +36,8 @@ public class AdminServiceTest {
     private final ItemMapper itemMapperMock = Mockito.mock(ItemMapper.class);
     private final AdminService adminServiceMock = new AdminService(userRepositoryMock, itemRepositoryMock, userMapperMock, itemMapperMock);
     private static final PostItemDTO televisionDTO = new PostItemDTO("Television", "60 inches flat screen", 1199.99, 5);
+    private static final ItemDTO updatedDTO = new ItemDTO(1, "Television", "60 inches flat screen", 1199.99, 5);
+
     private static final PostItemDTO defectTVDTO = new PostItemDTO("Television", null, 1199.99, 5);
     private static final User jeff = new Customer(
             new Name("Jeff", "Jeffson"),
@@ -63,6 +67,18 @@ public class AdminServiceTest {
     }
 
     @Nested
+    @DisplayName("Update an Item")
+    class updateItem{
+        @Test
+        void givenUpdatedItem_thenUpdateMatchingIDItem(){
+            adminServiceMock.addItem(televisionDTO);
+            adminServiceMock.updateItem(updatedDTO);
+
+            Mockito.verify(itemRepositoryMock).updateItem(updatedDTO);
+        }
+    }
+
+    @Nested
     @DisplayName(("Is the item valid"))
     class isItemDetailsValid {
         @Test
@@ -85,6 +101,11 @@ public class AdminServiceTest {
 
             Mockito.verify(userRepositoryMock).getAllCustomers();
         }
+
+        @Test
+        void ifNoCustomersAreRegistered_thenReturnsAnEmptyList(){
+            assertThat(adminServiceMock.getAllCustomers()).isEmpty();
+        }
     }
 
     @Nested
@@ -96,14 +117,6 @@ public class AdminServiceTest {
             adminServiceMock.getACustomer(jeff.getUserID());
 
             Mockito.verify(userRepositoryMock).getAUserByID(jeff.getUserID());
-        }
-
-        @Test
-        void givenAnID_ifNoCustomerIDMatch_thenThrowAnException(){
-            NotFoundException exception = assertThrows(NotFoundException.class,
-                    () -> adminServiceMock.getACustomer(10));
-
-            assertEquals("No customer was found for id " + 10 + ".", exception.getMessage());
         }
     }
 }

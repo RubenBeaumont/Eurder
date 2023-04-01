@@ -3,6 +3,8 @@ package com.switchfully.eurder.admin;
 import com.switchfully.eurder.user.api.dto.itemDTO.ItemDTO;
 import com.switchfully.eurder.user.api.dto.itemDTO.PostItemDTO;
 import com.switchfully.eurder.user.api.dto.userDTO.UserDTO;
+import com.switchfully.eurder.user.domain.itemObject.Item;
+import com.switchfully.eurder.user.domain.repository.ItemRepository;
 import com.switchfully.eurder.user.domain.repository.UserRepository;
 import com.switchfully.eurder.user.domain.userObject.User;
 import com.switchfully.eurder.user.domain.userObject.roles.Admin;
@@ -48,14 +50,18 @@ public class AdminEndToEndTest {
                     new Address("Rue Berkendael", 26, "1190", "Forest"),
                     "admin@gmail.be",
                     "0471260818"), "123");
+    private static final Item originalItem = new Item("TV", "a television", 995.95, 10);
+    private static final ItemDTO updatedItem = new ItemDTO(1, "Television", "60 inches flat screen", 995.95, 12);
     @Autowired
     UserRepository userRepository = new UserRepository();
+    ItemRepository itemRepository = new ItemRepository();
     UserMapper userMapper = new UserMapper();
 
     @Value("8080")
     private int port;
 
     @Nested
+    @DisplayName("Add an Item")
     class addItem {
         @Test
         void givenAnItem_thenItemIsSavedInStockAndReturned() {
@@ -73,7 +79,7 @@ public class AdminEndToEndTest {
                             .contentType(JSON)
                             .when()
                             .port(port)
-                            .post("/admin/items")
+                            .post("/admins/items")
                             .then()
                             .assertThat()
                             .statusCode(HttpStatus.CREATED.value())
@@ -83,11 +89,13 @@ public class AdminEndToEndTest {
             assertThat(itemDTO.getName()).isEqualTo(postItemDTO.getName());
             assertThat(itemDTO.getDescription()).isEqualTo(postItemDTO.getDescription());
             assertThat(itemDTO.getPrice()).isEqualTo(postItemDTO.getPrice());
+            assertThat(itemDTO.getAmount()).isEqualTo(postItemDTO.getAmount());
 
         }
     }
 
     @Nested
+    @DisplayName("Get all Customers")
     class getAllCustomers {
         @Test
         void returnsAllCustomers_andOnlyCustomers() {
@@ -103,7 +111,7 @@ public class AdminEndToEndTest {
                             .contentType(JSON)
                             .when()
                             .port(port)
-                            .get("/admin/customers")
+                            .get("/admins/customers")
                             .then()
                             .assertThat()
                             .statusCode(HttpStatus.OK.value())
@@ -118,9 +126,10 @@ public class AdminEndToEndTest {
     }
 
     @Nested
+    @DisplayName("Get a Customer")
     class getACustomer {
         @Test
-        void givenAnID_ifCustomerIsPresent_thenReturnsACustomer() {
+        void givenAnID_ifThereIsAMatchForThisID_thenReturnsThisCustomer() {
             userRepository.addUser(leonor);
             userRepository.addUser(joachim);
 
@@ -133,7 +142,7 @@ public class AdminEndToEndTest {
                             .contentType(JSON)
                             .when()
                             .port(port)
-                            .get("/admin/customers/" + leonor.getUserID())
+                            .get("/admins/customers/" + leonor.getUserID())
                             .then()
                             .assertThat()
                             .statusCode(HttpStatus.OK.value())
@@ -153,7 +162,53 @@ public class AdminEndToEndTest {
                     .contentType(JSON)
                     .when()
                     .port(port)
-                    .get("/admin/customers/2")
+                    .get("/admins/customers/2")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.NOT_FOUND.value());
+        }
+    }
+
+    @Nested
+    @DisplayName("Update an Item")
+    class updateItem{
+//        @Test
+//        void givenItemUpdates_ifAMatchIsFound_thenUpdateTheCorrespondingItem(){
+//            itemRepository.addItem(originalItem);
+//
+//            ItemDTO itemDTO =
+//                    RestAssured
+//                            .given()
+//                            .auth()
+//                            .preemptive()
+//                            .basic("admin@gmail.be", "123")
+//                            .body(updatedItem)
+//                            .accept(JSON)
+//                            .contentType(JSON)
+//                            .when()
+//                            .port(port)
+//                            .put("/admins/items")
+//                            .then()
+//                            .assertThat()
+//                            .statusCode(HttpStatus.OK.value())
+//                            .extract()
+//                            .as(ItemDTO.class);
+//
+//            assertThat(itemDTO).isEqualTo(updatedItem);
+//        }
+        @Test
+        void givenItemUpdates_ifNoMatchIsFound_thenThrowAnException(){
+            RestAssured
+                    .given()
+                    .auth()
+                    .preemptive()
+                    .basic("admin@gmail.be", "123")
+                    .body(updatedItem)
+                    .accept(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .port(port)
+                    .put("/admins/items")
                     .then()
                     .assertThat()
                     .statusCode(HttpStatus.NOT_FOUND.value());

@@ -35,6 +35,48 @@ public class UserServiceTest {
                     "jeff@hotmail.be",
                     "0478280818"),
             "123");
+    private static final CustomerDTO firstNameIsNullDTO = new CustomerDTO(
+            new Name(null, "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            "123");
+    private static final CustomerDTO lastNameIsNullDTO = new CustomerDTO(
+            new Name("Jeff", null),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            "123");
+    private static final CustomerDTO streetNameIsNullDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address(null, 26, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            "123");
+    private static final CustomerDTO streetNumberIsNullDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 0, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            "123");
+    private static final CustomerDTO wrongPostCodelDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190a225", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            "123");
+    private static final CustomerDTO cityIsNullDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190", null),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            "123");
     private static final CustomerDTO wrongEmailDTO = new CustomerDTO(
             new Name("Jeff", "Jeffson"),
             new ContactInformation(
@@ -42,6 +84,20 @@ public class UserServiceTest {
                     "jeffhotmail.be",
                     "0478280818"),
             "123");
+    private static final CustomerDTO wrongPhoneNumberDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "1478280818"),
+            "123");
+    private static final CustomerDTO passwordIsNullDTO = new CustomerDTO(
+            new Name("Jeff", "Jeffson"),
+            new ContactInformation(
+                    new Address("BerkendaelStraat", 26, "1190", "Forest"),
+                    "jeff@hotmail.be",
+                    "0478280818"),
+            null);
 
 
     @Nested
@@ -76,16 +132,43 @@ public class UserServiceTest {
     }
 
     @Nested
-    @DisplayName("Is the user profile valid")
+    @DisplayName("Is the User profile valid")
     class isUserProfileValid {
         @Test
         void givenACustomer_ifAllFieldsAreValid_thenReturnsTrue() {
             assertThat(userServiceMock.isUserProfileValid(customerDTO)).isTrue();
         }
-
+        @Test
+        void givenACustomer_ifFirstNameIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(firstNameIsNullDTO)).isFalse();
+        }
+        @Test
+        void givenACustomer_ifLastNameIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(lastNameIsNullDTO)).isFalse();
+        }
+        @Test
+        void givenACustomer_ifStreetNameIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(streetNameIsNullDTO)).isFalse();
+        }
+        @Test
+        void givenACustomer_ifPostCodeIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(wrongPostCodelDTO)).isFalse();
+        }
+        @Test
+        void givenACustomer_ifCityIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(cityIsNullDTO)).isFalse();
+        }
         @Test
         void givenACustomer_ifEmailIsNotValid_thenReturnsFalse() {
             assertThat(userServiceMock.isUserProfileValid(wrongEmailDTO)).isFalse();
+        }
+        @Test
+        void givenACustomer_ifPhoneNumberIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(wrongPhoneNumberDTO)).isFalse();
+        }
+        @Test
+        void givenACustomer_ifPasswordIsNotValid_thenReturnsFalse() {
+            assertThat(userServiceMock.isUserProfileValid(passwordIsNullDTO)).isFalse();
         }
     }
 }

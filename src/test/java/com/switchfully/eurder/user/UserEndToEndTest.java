@@ -25,8 +25,9 @@ public class UserEndToEndTest {
     @Value("8080")
     private int port;
 
+    @DisplayName("Register a Customer")
     @Test
-    void registerACustomer_givenACustomerToRegister_thenNewlyRegisteredCustomerIsSavedAndReturned(){
+    void givenACustomerToRegister_thenNewlyRegisteredCustomerIsSavedAndReturned(){
         CustomerDTO customerDTO = new CustomerDTO(
                 new Name("Léonor", "Bauguen"),
                 new ContactInformation(new Address("Rue Berkendael", 26, "1190", "Forest"), "l.bauguen56@gmail.fr", "0619102224"), "123");
@@ -39,7 +40,7 @@ public class UserEndToEndTest {
                         .contentType(JSON)
                         .when()
                         .port(port)
-                        .post("/user/registration")
+                        .post("/users/registration")
                         .then()
                         .assertThat()
                         .statusCode(HttpStatus.CREATED.value())

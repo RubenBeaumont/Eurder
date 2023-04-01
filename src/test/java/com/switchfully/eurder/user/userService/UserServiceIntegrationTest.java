@@ -9,6 +9,7 @@ import com.switchfully.eurder.user.domain.userObject.userDetails.ContactInformat
 import com.switchfully.eurder.user.domain.userObject.userDetails.Name;
 import com.switchfully.eurder.user.service.mapper.UserMapper;
 import com.switchfully.eurder.user.service.service.UserService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,9 +33,9 @@ public class UserServiceIntegrationTest {
     UserMapper userMapper = new UserMapper();
     UserService userService = new UserService(userRepository, userMapper);
 
-
+    @DisplayName("Register a Customer")
     @Test
-    void registerACustomer_givenACustomer_SaveItInTheRepository(){
+    void givenACustomer_SaveItInTheRepository(){
         userService.registerACustomer(customerDTO);
 
         assertThat(customer).isEqualTo(userRepository.getAUserByContactInformation(customerDTO.getContactInformation()));
