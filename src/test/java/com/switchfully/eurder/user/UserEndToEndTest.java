@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserEndToEndTest {
     @Autowired
     UserRepository userRepository;
-    @Value("8080")
+    @Value("8085")
     private int port;
 
     @DisplayName("Register a Customer")

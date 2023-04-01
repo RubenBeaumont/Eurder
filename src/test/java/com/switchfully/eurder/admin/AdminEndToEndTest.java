@@ -57,7 +57,7 @@ public class AdminEndToEndTest {
     ItemRepository itemRepository = new ItemRepository();
     UserMapper userMapper = new UserMapper();
 
-    @Value("8080")
+    @Value("8085")
     private int port;
 
     @Nested
